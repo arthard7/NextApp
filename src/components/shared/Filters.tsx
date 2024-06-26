@@ -63,6 +63,19 @@ const items = [
         text: 'Томаты',
         value: '6',
     },
+    {
+        text: 'Солёный огурчики',
+        value: '7',
+    },
+    {
+        text: 'Красный лук',
+        value: '8',
+    },
+    {
+        text: 'Томаты',
+        value: '9',
+    },
+
 ]
 export const Filters = ({className}: FiltersProps) => {
 
@@ -87,7 +100,7 @@ export const Filters = ({className}: FiltersProps) => {
 
             </div>
 
-            <CheckboxFiltersGroup items={items} title={'Ингредиенты'} className='mt-5' limit={6} defaultValue={defaultItems}/>
+            <CheckboxFiltersGroup items={items} title={'Ингредиенты'} className='mt-5' limit={6} defaultValue={defaultItems} defaultItems={defaultItems}/>
 
         </div>
     );
