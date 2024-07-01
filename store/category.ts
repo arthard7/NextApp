@@ -10,3 +10,6 @@ export const useCategoryStore = create<Category>()((set) => ({
     setActiveId: (activeId: number) => set({activeId})
 
 }))
+
+
+
