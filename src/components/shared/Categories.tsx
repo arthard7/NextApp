@@ -28,14 +28,12 @@ const CategoriesPizza = [
 
 
 
-const testData = []
 
 export const Categories = ({className}: CategoriesProps) => {
 
 
     const [number, setNumber] = useState(0)
     const [scroll, setScroll] = useState(0)
-    const [testData, setTestData] = useState<number[]>([])
     const randomInteger = (min: number, max: number) => {
         return Math.floor(Math.random() * (max - min) + min)
     }
@@ -43,51 +41,7 @@ export const Categories = ({className}: CategoriesProps) => {
     const randomNumber = () => {
         return Promise.resolve(randomInteger(9000, 11000))
     }
-
-
-
-
-
-    useEffect(() => {
-
-        let newArr = []
-
-        for (let i = 0; i < number; i++) {
-
-            newArr.push(randomInteger(0, 20))
-
-            setTestData(newArr)
-        }
-
-        const handleScroll = () => {
-            setScroll(window.scrollY)
-            console.log(scroll)
-        }
-
-        const getData = async () => {
-
-           const num = await randomNumber()
-            setNumber(num)
-
-        }
-
-        getData()
-
-        // for (let i = 0; i < number; i++) {
-        //     setTestData(prev => [...prev, randomInteger(0, 20)])
-        // }
-
-
-        window.addEventListener('scroll', handleScroll)
-        return () => {
-
-            window.removeEventListener('scroll', handleScroll)
-
-        }
-
-
-    }, [])
-
+    
 
     const categoryActiveId = useCategoryStore((state) => state.activeId)
 

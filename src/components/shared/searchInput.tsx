@@ -1,6 +1,6 @@
 'use client'
 import {Search} from "lucide-react";
-import {cn, } from "@/lib/utils";
+import {cn,} from "@/lib/utils";
 import {useEffect, useState} from "react";
 import Link from "next/link";
 import {Api} from "../../../services/api-client";
@@ -24,7 +24,6 @@ const useDebounce = (callback: () => void, delay: number, dependencies: any[]) =
 };
 
 
-
 export const SearchInput = ({className}: searchInputProps) => {
 
 
@@ -33,15 +32,21 @@ export const SearchInput = ({className}: searchInputProps) => {
     const [products, setProducts] = useState<Product[]>([])
 
 
-    useDebounce(() => {
+    useDebounce(async () => {
 
-        Api.products.search(searchQuery).then((res) => setProducts(res))
+        try {
+            const response = await Api.products.search(searchQuery)
+            setProducts(response)
+        } catch (error) {
+            console.log(error)
+        }
+
 
     }, 250, [searchQuery])
 
-const onClickItem = () => {
-    setSearchQuery('')
-}
+    const onClickItem = () => {
+        setSearchQuery('')
+    }
 
 
     return (
@@ -61,25 +66,25 @@ const onClickItem = () => {
 
                 {searchQuery.length > 0 && products.length > 0 &&
                     <div
-                    className={cn('absolute w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-200 invisible opacity-0 z-30',
-                        focused && 'visible opacity-100 top-12')}>
+                        className={cn('absolute w-full bg-white rounded-xl py-2 top-14 shadow-md transition-all duration-200 invisible opacity-0 z-30',
+                            focused && 'visible opacity-100 top-12')}>
                         {products.map((product) => (
-                        (
-                            <Link
-                                onClick={onClickItem}
+                            (
+                                <Link
+                                    onClick={onClickItem}
 
-                                key={product.id}
-                                href={`/product/${product.id}`}
-                                className={'flex items-center hover:bg-primary/10'}>
-                                <img src={product.imageUrl}
-                                     alt={product.name} width={32} height={32} className={'rounded-lg ml-2'}/>
-                                <div className={'px-3 py-2'}>
-                                    {product.name}
-                                </div>
-                            </Link>
-                        )
-                    ))}
-                </div>}
+                                    key={product.id}
+                                    href={`/product/${product.id}`}
+                                    className={'flex items-center hover:bg-primary/10'}>
+                                    <img src={product.imageUrl}
+                                         alt={product.name} width={32} height={32} className={'rounded-lg ml-2'}/>
+                                    <div className={'px-3 py-2'}>
+                                        {product.name}
+                                    </div>
+                                </Link>
+                            )
+                        ))}
+                    </div>}
             </div>
         </>
 

@@ -3,47 +3,6 @@ import {ProductsGroupList} from "@/components/shared/ProductsGroupList";
 
 export default function Home() {
 
-//     function randomInteger(min: number, max: number) {
-//         return Math.floor(Math.random() * (max - min) + min)
-//     }
-//
-// //Имитация запроса к серверу
-//
-//     const randomNumber = () => {
-//         Promise.resolve(randomInteger(9000, 11000))
-//     }
-//     const testData = []
-//
-//     const randomList = () => {
-//         const [number, setNumber] = useState(0)
-//         const [scroll, setScroll] = useState(0)
-//
-//
-//         useEffect(async () => {
-//             setNumber(await randomNumber())
-//
-//             window.addEventListener('scroll', () => {
-//                     setScroll(window.scrollY)
-//                 }
-//             )
-//
-//
-//                 for (let i = 0; i < number; i++) {
-//                     testData.push(randomInteger(0, 20))
-//                 }
-//
-//                 return () => {
-//                     window.removeEventListener('scroll', () => setScroll(window.scrollY))
-//                 }
-//
-//             }, [])
-//
-//             return (
-//                 <div>
-//
-//                 </div>
-//             )
-//         }
 
 
         return (
@@ -52,10 +11,7 @@ export default function Home() {
                     <Title text='Все пиццы' size={"lg"} className={'font-extrabold'}/>
                 </Container>
                 <TopBar/>
-
-
                 <Container className={'mt-10 pb-14'}>
-
                     <div className='flex gap-[80px]'>
 
                         {/*  Фильтрация  */}

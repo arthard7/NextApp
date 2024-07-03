@@ -1,6 +1,6 @@
 'use client'
 import {FilterCheckboxProps, FilterCheckbox} from "@/components/shared/FilterCheckbox";
-import {Input} from "@/components/ui";
+import {Input, Skeleton} from "@/components/ui";
 import React, {ChangeEvent, useState} from "react";
 
 
@@ -14,32 +14,37 @@ type DefaultValue = {
 interface CheckboxFiltersProps {
     title: string
     items: Item[];
-    defaultItems: Item[];
+    defaultItems?: Item[];
     limit?: number;
     searchInputPlaceholder?: string
-    onChange?: (values: string[]) => void
+    onClickCheckbox?: (id: string) => void
     defaultValue?: DefaultValue[]
     className?: string;
-
+    loading?: boolean
+    selected?: Set<string>;
+    name?: string
 }
 
 
 export const CheckboxFiltersGroup = ({
                                          title,
+                                         selected,
                                          className,
                                          defaultItems,
                                          items,
                                          defaultValue,
                                          searchInputPlaceholder = 'Поиск...',
                                          limit = 5,
-                                         onChange
+                                         onClickCheckbox,
+                                         loading,
+                                         name
                                      }: CheckboxFiltersProps) => {
 
     const [showAll, setShowAll] = useState<boolean | null>(false)
     const [search, setSearch] = useState<string>('')
 
-    const list = showAll ? items : defaultItems.slice(0, limit)
 
+    const list = showAll ? items : (defaultItems || items).slice(0, limit)
 
     const changeSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
@@ -49,6 +54,26 @@ export const CheckboxFiltersGroup = ({
         setShowAll(prev => !prev)
     }
 
+
+    if (loading) {
+        return (
+            <div>
+
+
+                <p className='font-bold mb-3'>{title}</p>
+
+
+                {Array.from({length: limit}).map((_, index) => (
+
+                    <Skeleton key={index} className={'h-6 mb-4 rounded-[8px]'}/>
+
+                ))}
+                <Skeleton className={' w-28 h-6 mb-4 rounded-[8px]'}/>
+
+            </div>
+        )
+    }
+
     return (
         <div className={className}>
             <p className='font-bold mb-3'>{title}</p>
@@ -56,7 +81,8 @@ export const CheckboxFiltersGroup = ({
 
             {showAll && (
                 <div className='mb-5'>
-                    <Input value={search} onChange={changeSearchInput}  placeholder={searchInputPlaceholder} className='bg-gray-50 border-none'/>
+                    <Input value={search} onChange={changeSearchInput} placeholder={searchInputPlaceholder}
+                           className='bg-gray-50 border-none'/>
                 </div>
             )}
 
@@ -67,18 +93,17 @@ export const CheckboxFiltersGroup = ({
                     list.flatMap((item) => (
                         item.text.toLowerCase().includes(search.toLowerCase()) ? (
                             <FilterCheckbox
+                                name={name}
                                 text={item.text}
                                 value={item.value}
                                 key={String(item.value)}
-                                onCheckedChange={(ids) => console.log(ids)}
-                                checked={false}
+                                onCheckedChange={() => onClickCheckbox?.(item.value)}
+                                checked={selected?.has(item.value)}
                                 endAdornment={item.endAdornment}
                             />
                         ) : []
                     ))
                 }
-
-
 
 
             </div>
