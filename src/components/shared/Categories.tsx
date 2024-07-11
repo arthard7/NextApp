@@ -3,33 +3,16 @@ import {cn} from "@/lib/utils";
 import {useEffect, useState} from "react";
 import {useCategoryStore} from "../../../store/category";
 import {random} from "nanoid";
+import {Category} from "@prisma/client";
 
 
 interface CategoriesProps {
     className?: string;
-
+    items?: Category[]
 }
 
-const CategoriesPizza = [
-    {id: 1, name: 'Пиццы'},
-    {id: 2, name: 'Завтрак'},
-    {id: 3, name: 'Закуски'},
-    {id: 4, name: 'Коктейли'},
-    {id: 5, name: 'Кофе'},
-    {id: 6, name: 'Напитки'},
-    {id: 7, name: 'Десерты'}
-]
 
-
-
-
-
-
-
-
-
-
-export const Categories = ({className}: CategoriesProps) => {
+export const Categories = ({className, items}: CategoriesProps) => {
 
 
     const [number, setNumber] = useState(0)
@@ -41,7 +24,7 @@ export const Categories = ({className}: CategoriesProps) => {
     const randomNumber = () => {
         return Promise.resolve(randomInteger(9000, 11000))
     }
-    
+
 
     const categoryActiveId = useCategoryStore((state) => state.activeId)
 
@@ -59,7 +42,7 @@ export const Categories = ({className}: CategoriesProps) => {
     return (
         <div className={cn('inline-flex gap-1 bg-gray-50 p-1 rounded-2xl', className)}>
 
-            {CategoriesPizza.map(({name, id}, index) => (
+            {items?.map(({name, id}, index) => (
                 <a
                     className={cn(
                         'flex items-center font-bold h-11 rounded-2xl px-5',

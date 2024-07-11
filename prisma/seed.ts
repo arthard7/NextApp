@@ -60,8 +60,8 @@ async function create() {
 
     const pizza1 = await prisma.product.create({
         data: {
-            name: 'сырная',
-            imageUrl: 'public/pizzaImg/cheese.png',
+            name: 'Сырная',
+            imageUrl: 'https://media.dodostatic.net/image/r:233x233/11EE7D610D2925109AB2E1C92CC5383C.avif',
             categoryId: 1,
             ingredients: {
                 connect: _ingredients.slice(0, 5)
