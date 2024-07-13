@@ -1,8 +1,8 @@
 import {prisma} from "../../../../../prisma/prisma-client";
 import {notFound} from "next/navigation";
-import {Container, Title} from "@/components/shared";
-import {ProductImage} from "@/components/shared/ProductImage";
-import {GroupVariants} from "@/components/shared/groupVariants";
+import {Container, Title} from "../../../shared/components/shared";
+import {PizzaImage} from "@/app/shared/components/shared/PizzaImage";
+import {GroupVariants} from "@/app/shared/components/shared/groupVariants";
 
 export default async function ProductPage({params: {id}}: any) {
 
@@ -20,9 +20,9 @@ export default async function ProductPage({params: {id}}: any) {
 
             <div className={'flex flex-1 mt-24 '}>
 
-                <ProductImage src={product.imageUrl}
-                              alt={product.name} className={''}
-                              size={40}/>
+                <PizzaImage src={product.imageUrl}
+                            alt={product.name} className={''}
+                            size={40}/>
 
                 <div className={'w-[490px] bg-[#f7f6f5] p-7 '}>
                     <Title text={product.name} size={'md'} className={'font-extrabold mb-1'}></Title>
