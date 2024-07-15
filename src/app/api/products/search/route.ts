@@ -20,6 +20,8 @@ export async function GET(req: NextRequest) {
     //     LIMIT 5
     // `;
 
+    //баг в призме с русским регистром
+
     const products = await prisma.product.findMany({
         where: {
             name: {
