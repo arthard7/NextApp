@@ -50,7 +50,6 @@ useEffect(() => {
 
 }, [categoryId, entry[0]], )
 
-    console.log()
 
 
     // useEffect(() => {
@@ -61,6 +60,7 @@ useEffect(() => {
     //
     // }, [categoryId, intersectionRef.current])
 
+    console.log(items)
 
 
     return (
@@ -68,14 +68,14 @@ useEffect(() => {
             <Title text={title} size={"lg"} className={'font-extrabold mb-5'}/>
 
             <div className={cn('grid grid-cols-3 gap-[50px]')}>
-                {items.map((item, i) => (
+                {items.map((product, i) => (
 
                     <ProductCard
-                        key={item.id}
-                        id={item.id}
-                        name={item.name}
-                        price={item.price}
-                        imageUrl={item.imageUrl}
+                        key={product.id}
+                        id={product.id}
+                        name={product.name}
+                        price={product.items[0].price}
+                        imageUrl={product.imageUrl}
                     />
                 ))}
             </div>

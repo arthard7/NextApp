@@ -16,7 +16,6 @@ export default async function Home() {
         }
     })
 
-
         return (
             <>
                 <Container className={'mt-10'}>
