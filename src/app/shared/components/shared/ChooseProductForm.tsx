@@ -9,6 +9,7 @@ interface ChoosePizzaFormProps {
     imageUrl: string
     name: string;
     onClickAdd?: VoidFunction
+    price: number
     className?: string;
 
 }
@@ -18,11 +19,9 @@ export const ChooseProductForm = ({
                                       className,
                                       name,
                                       imageUrl,
+                                      price,
                                       onClickAdd
                                   }: ChoosePizzaFormProps) => {
-
-    const textDetails = '30 см, традиционное тесто 30'
-    const totalPrice = 300
 
 
     return (
@@ -42,13 +41,12 @@ export const ChooseProductForm = ({
 
                 <div>
                     <Title text={name} size='md' className='font-extrabold mb-1'/>
-                    <p className='text-gray-400'>{textDetails}</p>
                 </div>
 
                 <Button onClick={onClickAdd}
                         className='  h-[55px] px-10 text-base rounded-[18px] w-full mb-4'
                 >
-                    Добавить в корзину за {totalPrice} р
+                    Добавить в корзину за {price} р
                 </Button>
             </div>
         </div>

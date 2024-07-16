@@ -7,6 +7,7 @@ import {useRouter} from "next/navigation";
 import {ChooseProductForm} from "@/app/shared/components/shared/ChooseProductForm";
 import {ProductWithRelations} from "../../../../../@types/product";
 import {ChoosePizzaForm} from "@/app/shared/components/shared/choose-pizza-form";
+import {useCartStore} from "../../../../../shared/store/cart";
 
 
 interface chooseProductModalProps {
@@ -19,7 +20,24 @@ interface chooseProductModalProps {
 export const ChooseProductModal = ({className, product}: chooseProductModalProps) => {
 
     const router = useRouter()
-    const isPizzaForm = Boolean(product.items[0].pizzaType)
+    const firstItem = product.items[0]
+    const isPizzaForm = Boolean(firstItem.pizzaType)
+    const addCartItem = useCartStore(state => state.addCartItem)
+
+
+    const onAddProduct = () => {
+
+        addCartItem({
+            productItemId: firstItem.id
+        })
+
+    }
+    const onAddPizza = (productItemId: number, ingredients: number[]) => {
+        addCartItem({
+            productItemId,
+            ingredients
+        })
+    }
 
 
     return (
@@ -31,11 +49,15 @@ export const ChooseProductModal = ({className, product}: chooseProductModalProps
                 {
 
                     isPizzaForm
-                        ? <ChoosePizzaForm imageUrl={product.imageUrl} name={product.name}
-                                           ingredients={product.ingredients}
-                                           items={product.items}
+                        ? <ChoosePizzaForm
+                            onClickAddCart={onAddPizza}
+                            imageUrl={product.imageUrl} name={product.name}
+                            ingredients={product.ingredients}
+                            items={product.items}
                         />
                         : <ChooseProductForm
+                            price={firstItem.price}
+                            onClickAdd={onAddProduct}
                             imageUrl={product.imageUrl}
                             name={product.name}
                         />
