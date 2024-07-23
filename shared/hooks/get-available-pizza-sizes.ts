@@ -5,6 +5,12 @@ import {useEffect} from "react";
 export const getAvailablePizzaSizes = (items: ProductItem[], size: number, type: PizzaType ) => {
 
 
+
+
+
+
+
+
     const filteredPizzaByType = items.filter((item) => item.pizzaType === type)
     const availablePizzasSizes = pizzaSizes.map((item) => ({
         name: item.name,
@@ -14,5 +20,7 @@ export const getAvailablePizzaSizes = (items: ProductItem[], size: number, type:
 
 
 return availablePizzasSizes
+
+
 
 };

@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "../../../../prisma/prisma-client";
-import * as crypto from "crypto";
+import crypto from "crypto";
 import {findOrCreateCart} from "../../../../shared/lib/find-or-create-cart";
 import {CreateCartItemValues} from "../../../../shared/services/dto/cart.dto";
 import {updateCartTotalAmount} from "../../../../shared/lib/update-cart-total-amount";
@@ -54,49 +54,61 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
 
+
     try {
-        let token = req.cookies.get('cartToken')?.value
+        let token = req.cookies.get('cartToken')?.value;
 
         if (!token) {
-            token = crypto.randomUUID()
+            token = crypto.randomUUID();
         }
 
+       const userCart = await findOrCreateCart(token);
+       const data = (await req.json()) as CreateCartItemValues;
 
-        const userCart = await findOrCreateCart(token)
-
-        const data = (await req.json()) as CreateCartItemValues
 
         const findCartItem = await prisma.cartItem.findFirst({
             where: {
                 cartId: userCart.id,
                 productItemId: data.productItemId,
-                ingredients: {every: {id: {in: data.ingredients}}}
+                ingredients: {
+                    every: {
+                        id: {in: data.ingredients},
+                    },
+                    some: {}
+                },
             }
-        })
+        });
 
+
+        // Если товар был найден, делаем +1
         if (findCartItem) {
             await prisma.cartItem.update({
                 where: {
-                    id: findCartItem.id
+                    id: findCartItem.id,
                 },
                 data: {
-                    quantity: findCartItem.quantity + 1
-                }
-            })
+                    quantity: findCartItem.quantity + 1,
+                },
+            });
+        } else {
+            await prisma.cartItem.create({
+                data: {
+                    cartId: userCart.id,
+                    productItemId: data.productItemId,
+                    quantity: 1,
+                    ingredients: {connect: data.ingredients?.map((id) => ({id}))},
+                },
+            });
         }
 
-        const updatedUserCart = await updateCartTotalAmount(token)
-        const response = NextResponse.json(updatedUserCart)
-        response.cookies.set('cartToken', token)
+        const updatedUserCart = await updateCartTotalAmount(token);
 
-        return response
+        const resp = NextResponse.json(updatedUserCart);
+        resp.cookies.set('cartToken', token);
+        return resp;
+    } catch (error) {
+        console.error('[CART_POST] Server error', error);
 
-
-    } catch (e) {
-        console.error('[CART_POST] Server Error', e)
-
-        return NextResponse.json({message: 'Не удалось создать корзину'}, {status: 500})
+        return NextResponse.json({message: 'Не удалось создать корзину'}, {status: 500});
     }
-
-
 }

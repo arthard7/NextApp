@@ -2,23 +2,25 @@ import {cn} from "../../../../../shared/lib/utils";
 import {Container} from "./Container";
 import Image from "next/image";
 import {Button} from "../ui";
-import {ArrowRight, ShoppingCart, User} from "lucide-react";
+import { User} from "lucide-react";
 import Link from "next/link";
 import {SearchInput} from "./searchInput";
 import {CartButton} from "@/app/shared/components/shared/CartButton";
 
 
 interface HeaderProps {
+    hasSearch?: boolean
+    hasCart?: boolean
     className?: string;
 
 }
 
 
-export const Header = ({className}: HeaderProps) => {
+export const Header = ({className, hasSearch = false, hasCart = true}: HeaderProps) => {
 
 
     return (
-        <header className={cn('border border-b ', className)}>
+        <header className={cn(' border-b ', className)}>
             <Container className='flex items-center justify-between py-8'>
 
 
@@ -34,9 +36,10 @@ export const Header = ({className}: HeaderProps) => {
                     </div>
                 </Link>
 
-                <div className={'mx-10 flex-1'}>
+
+                  { hasSearch && <div className={'mx-10 flex-1'}>
                     <SearchInput></SearchInput>
-                </div>
+                </div> }
 
 
                 {/* правая часть */}
@@ -47,10 +50,12 @@ export const Header = ({className}: HeaderProps) => {
                     </Button>
 
 
-                    <div>
-                        <CartButton/>
+                    {hasCart && (
 
-                    </div>
+                            <CartButton/>
+
+                    )}
+
 
 
                 </div>

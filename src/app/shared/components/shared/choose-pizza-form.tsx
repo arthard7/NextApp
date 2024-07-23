@@ -10,7 +10,7 @@ import {Ingredient, ProductItem} from "@prisma/client";
 import {IngredientItem} from "@/app/shared/components/shared/IngredientItem";
 import {useSet} from "react-use";
 import {calcTotalPizzaPrice} from "../../../../../shared/lib/calc-total-pizza-price";
-import {getAvailablePizzaSizes} from "../../../../../shared/hooks/get-available-pizza-sizes";
+import {getAvailablePizzaSizes} from "../../../../../shared/hooks";
 
 
 interface ChoosePizzaFormProps {
@@ -19,8 +19,9 @@ interface ChoosePizzaFormProps {
     name: string;
     ingredients: Ingredient[];
     items: ProductItem[];
-    onClickAddCart?: VoidFunction
+    onClickAddCart: (itemId: number, ingredients: number[]) => void
     className?: string;
+    loading?: boolean
 
 }
 
@@ -31,7 +32,8 @@ export const ChoosePizzaForm = ({
                                     imageUrl,
                                     ingredients,
                                     items,
-                                    onClickAddCart
+                                    onClickAddCart,
+                                    loading
                                 }: ChoosePizzaFormProps) => {
 
 
@@ -43,11 +45,10 @@ export const ChoosePizzaForm = ({
 
 
     const totalPizzaPrice = calcTotalPizzaPrice(items, ingredients, type, size, selectedIngredients)
+    const availablePizzasSizes = getAvailablePizzaSizes(items, size, type)
 
 
-
-
-    const  availablePizzasSizes  = getAvailablePizzaSizes(items, size, type)
+    const currentItemId = items.find((item) => item.pizzaType === type && item.size === size)?.id
 
 
     useEffect(() => {
@@ -62,13 +63,12 @@ export const ChoosePizzaForm = ({
     }, [type])
 
 
-
-
-
     const handleClickAdd = () => {
+        if (currentItemId) {
 
-        onClickAddCart?.()
+            onClickAddCart(currentItemId, Array.from(selectedIngredients))
 
+        }
 
     }
 
@@ -121,8 +121,10 @@ export const ChoosePizzaForm = ({
                     </div>
                 </div>
 
-                <Button onClick={onClickAddCart}
-                        className='  h-[55px] px-10 text-base rounded-[18px] w-full mb-4'>
+                <Button
+                    loading={loading}
+                    onClick={handleClickAdd}
+                    className='  h-[55px] px-10 text-base rounded-[18px] w-full mb-4'>
                     Добавить в корзину за {totalPizzaPrice} р
                 </Button>
             </div>

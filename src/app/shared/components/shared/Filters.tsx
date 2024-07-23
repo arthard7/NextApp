@@ -36,7 +36,7 @@ export const Filters = ({className}: FiltersProps) => {
 
 
             <CheckboxFiltersGroup
-                title={'Размеры'}
+                title={'Тип теста'}
                 name='pizzaTypes'
                 onClickCheckbox={filters.setPizzaTypes}
                 items={[
