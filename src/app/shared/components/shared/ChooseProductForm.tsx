@@ -1,5 +1,4 @@
 import {cn} from "../../../../../shared/lib/utils";
-import {PizzaImage} from "./PizzaImage";
 import {Title} from "./index";
 import {Button} from "../ui";
 
@@ -11,7 +10,7 @@ interface ChoosePizzaFormProps {
     onClickAdd?: VoidFunction
     price: number
     className?: string;
-
+    loading?: boolean
 }
 
 
@@ -20,7 +19,9 @@ export const ChooseProductForm = ({
                                       name,
                                       imageUrl,
                                       price,
-                                      onClickAdd
+                                      onClickAdd,
+
+                                      loading
                                   }: ChoosePizzaFormProps) => {
 
 
@@ -43,8 +44,10 @@ export const ChooseProductForm = ({
                     <Title text={name} size='md' className='font-extrabold mb-1'/>
                 </div>
 
-                <Button onClick={onClickAdd}
-                        className='  h-[55px] px-10 text-base rounded-[18px] w-full mb-4'
+                <Button
+                    loading={loading}
+                    onClick={onClickAdd}
+                    className='  h-[55px] px-10 text-base rounded-[18px] w-full mb-4'
                 >
                     Добавить в корзину за {price} р
                 </Button>

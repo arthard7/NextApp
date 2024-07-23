@@ -10,7 +10,7 @@ import {Ingredient, ProductItem} from "@prisma/client";
 import {IngredientItem} from "@/app/shared/components/shared/IngredientItem";
 import {useSet} from "react-use";
 import {calcTotalPizzaPrice} from "../../../../../shared/lib/calc-total-pizza-price";
-import {getAvailablePizzaSizes} from "../../../../../shared/hooks/get-available-pizza-sizes";
+import {getAvailablePizzaSizes} from "../../../../../shared/hooks";
 
 
 interface ChoosePizzaFormProps {
@@ -21,6 +21,7 @@ interface ChoosePizzaFormProps {
     items: ProductItem[];
     onClickAddCart: (itemId: number, ingredients: number[]) => void
     className?: string;
+    loading?: boolean
 
 }
 
@@ -31,7 +32,8 @@ export const ChoosePizzaForm = ({
                                     imageUrl,
                                     ingredients,
                                     items,
-                                    onClickAddCart
+                                    onClickAddCart,
+                                    loading
                                 }: ChoosePizzaFormProps) => {
 
 
@@ -119,8 +121,10 @@ export const ChoosePizzaForm = ({
                     </div>
                 </div>
 
-                <Button onClick={handleClickAdd}
-                        className='  h-[55px] px-10 text-base rounded-[18px] w-full mb-4'>
+                <Button
+                    loading={loading}
+                    onClick={handleClickAdd}
+                    className='  h-[55px] px-10 text-base rounded-[18px] w-full mb-4'>
                     Добавить в корзину за {totalPizzaPrice} р
                 </Button>
             </div>

@@ -1,5 +1,4 @@
-import {Cart} from "@prisma/client";
-import {PizzaSize, PizzaType} from "../constants/pizza";
+
 import {CartDTO} from "../dto/cart.dto";
 import {calcCartItemTotalPrice} from "./calc-cart-item-total-price";
 
@@ -12,6 +11,7 @@ export type CartStateItem = {
     price: number
     name: string
     imageUrl: string
+    disabled?: boolean
     pizzaSize?: number | null;
     pizzaType?: number | null;
     ingredients: Array<{name: string, price: number}>
@@ -38,12 +38,13 @@ export const getCartDetails =  (data: CartDTO): ReturnProps => {
             imageUrl: item.productItem.product.imageUrl,
             pizzaSize: item.productItem.size,
             pizzaType: item.productItem.pizzaType,
+            disabled: false,
             ingredients: item.ingredients.map((item) => ({
                 name: item.name,
                 price: item.price
             }))
         }
-    })
+    }) as CartStateItem[]
 
 
 

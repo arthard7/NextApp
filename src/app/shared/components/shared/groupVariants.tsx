@@ -1,6 +1,5 @@
 'use client'
 import {cn} from "../../../../../shared/lib/utils";
-import {pizzaSizes} from "../../../../../shared/constants/pizza";
 
 type Variant = {
     name: string;

@@ -54,18 +54,16 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
 
-    let token
-    let userCart
-    let data
+
     try {
-        token = req.cookies.get('cartToken')?.value;
+        let token = req.cookies.get('cartToken')?.value;
 
         if (!token) {
             token = crypto.randomUUID();
         }
 
-         userCart = await findOrCreateCart(token);
-        data = (await req.json()) as CreateCartItemValues;
+       const userCart = await findOrCreateCart(token);
+       const data = (await req.json()) as CreateCartItemValues;
 
 
         const findCartItem = await prisma.cartItem.findFirst({
@@ -76,10 +74,10 @@ export async function POST(req: NextRequest) {
                     every: {
                         id: {in: data.ingredients},
                     },
+                    some: {}
                 },
-            },
+            }
         });
-
 
 
         // Если товар был найден, делаем +1

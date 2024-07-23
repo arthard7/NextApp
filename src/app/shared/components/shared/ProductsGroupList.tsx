@@ -5,10 +5,11 @@ import {useIntersectionObserver} from "@reactuses/core";
 import {ProductCard} from "./ProductCard";
 import {useEffect, useRef, useState} from "react";
 import {useCategoryStore} from "../../../../../shared/store/category";
+import {ProductWithRelations} from "../../../../../@types/product";
 
 interface ProductsGroupListProps {
     title: string;
-    items: any[];
+    items: ProductWithRelations[];
     categoryId: number
     className?: string;
     listClassName?: string
@@ -71,11 +72,13 @@ useEffect(() => {
                 {items.map((product, i) => (
 
                     <ProductCard
+
                         key={product.id}
                         id={product.id}
                         name={product.name}
                         price={product.items[0].price}
                         imageUrl={product.imageUrl}
+                        ingredients={product.ingredients}
                     />
                 ))}
             </div>

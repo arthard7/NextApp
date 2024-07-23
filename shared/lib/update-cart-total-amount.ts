@@ -27,7 +27,12 @@ export const updateCartTotalAmount = async (token: string) => {
  })
 
     if(!userCart){
+
+
         return 0
+
+
+
     }
 
 const totalAmount = userCart?.items.reduce((acc,item) => {

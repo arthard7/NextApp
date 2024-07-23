@@ -1,7 +1,7 @@
 import {useRouter, useSearchParams} from "next/navigation";
 import {useSet} from "react-use";
 
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {useIngredients} from "./use-ingredients";
 
 
@@ -25,7 +25,7 @@ export interface QueryFilters extends PropsPrice {
     ingredients: string
 }
 
-export interface  Filters {
+export interface Filters {
 
     pizzaTypes: Set<string>
     sizes: Set<string>
@@ -71,13 +71,12 @@ export const useFilters = (): ReturnProps => {
 
 
     const updatePrice = (name: keyof PropsPrice, value: number) => {
-        setPrices((prev) =>    ({
+        setPrices((prev) => ({
             ...prev,
             [name]: value,
 
         }))
     }
-
 
 
     const filters = {
@@ -88,16 +87,19 @@ export const useFilters = (): ReturnProps => {
     }
 
 
-    return {
-        sizes,
-        pizzaTypes,
-        selectedIngredients,
-        prices,
-        setPrices: updatePrice,
-        setPizzaTypes: togglePizzaTypes,
-        setSizes: toggleSizes,
-        setSelectedIngredients: toggleIngredients
-    }
+    return useMemo(() =>
+        ({
+
+            sizes,
+            pizzaTypes,
+            selectedIngredients,
+            prices,
+            setPrices: updatePrice,
+            setPizzaTypes: togglePizzaTypes,
+            setSizes: toggleSizes,
+            setSelectedIngredients: toggleIngredients
+
+        }), [sizes, pizzaTypes, selectedIngredients, prices])
 
 }
 
