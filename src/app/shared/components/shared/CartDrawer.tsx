@@ -12,43 +12,29 @@ import {Button} from "@/app/shared/components/ui";
 import Link from "next/link";
 import {ArrowLeft, ArrowRight} from "lucide-react";
 
-import {Props} from "next/script";
 import {CartDrawerItem} from "@/app/shared/components/shared/CartDrawerItem";
 import {getCartItemDetails} from "../../../../../shared/lib/get-cart-item-details";
-import {useCartStore} from "../../../../../shared/store/cart";
-import React, {useEffect} from "react";
+import React from "react";
 import {PizzaSize, PizzaType} from "../../../../../shared/constants/pizza";
 import {Title} from "@/app/shared/components/shared/Title";
-import {clsx} from "clsx";
 import {cn} from "../../../../../shared/lib/utils";
+import {useCart} from "../../../../../shared/hooks";
 
 
 interface CartDrawerProps {
-    className?: string;
     children?: React.ReactNode
 
 }
 
 
-export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({children, className,}: CartDrawerProps) => {
+export const CartDrawer: React.FC<React.PropsWithChildren> = ({children, }: CartDrawerProps) => {
 
-
-    const [totalAmount, fetchCartItems, updateItemQuantity, removeCartItem, items] = useCartStore((state) => [
-        state.totalAmount,
-        state.fetchCartItems,
-        state.updateItemQuantity,
-        state.removeCartItem,
-        state.items,
-    ])
-
-    useEffect(() => {
-        fetchCartItems()
-    }, [])
-
+const {removeCartItem, updateItemQuantity, items, totalAmount} = useCart()
+const [redirecting, setRedirecting] = React.useState(false)
 
     const onClickRemoveButton = (id: number) => {
 
-        removeCartItem(id)
+       removeCartItem(id)
 
     }
 
@@ -56,7 +42,8 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({children, 
     const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
 
         const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1
-        updateItemQuantity(id, newQuantity)
+
+       updateItemQuantity(id, newQuantity)
 
     }
 
@@ -109,7 +96,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({children, 
                                             onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
                                             key={item.id}
                                             name={item.name}
-                                            details={item.pizzaSize && item.pizzaType ? getCartItemDetails(item.pizzaType as PizzaType, item.pizzaSize as PizzaSize, item.ingredients) : ''}
+                                            details={getCartItemDetails(item.pizzaType as PizzaType, item.pizzaSize as PizzaSize, item.ingredients) }
                                             price={item.price}
                                             imageUrl={item.imageUrl}
                                             id={item.id}
@@ -134,10 +121,11 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({children, 
                                         <span className={'font-bold text-lg'}>{totalAmount} ₽</span>
                                     </div>
 
-                                    <Link href={'/cart'}>
+                                    <Link href={'/checkout'}>
                                         <Button
-                                            // onClick={() => setRedirecting(true)}
-                                            // loading={loading || redirecting}
+
+                                            onClick={() => setRedirecting(true)}
+                                            loading={ redirecting}
                                             type={'submit'}
                                             className={'w-full h-12 text-base'}>
                                             Оформить заказ

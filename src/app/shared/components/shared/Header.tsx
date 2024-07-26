@@ -4,8 +4,8 @@ import Image from "next/image";
 import {Button} from "../ui";
 import { User} from "lucide-react";
 import Link from "next/link";
-import {SearchInput} from "./searchInput";
 import {CartButton} from "@/app/shared/components/shared/CartButton";
+import {SearchInput} from "@/app/shared/components/shared/searchInput";
 
 
 interface HeaderProps {
