@@ -1,1 +1,2 @@
-import {calcTotalPizzaPrice} from './calc-total-pizza-price'
+export {calcTotalPizzaPrice} from './calc-total-pizza-price'
+export {sendEmail} from './send-email'

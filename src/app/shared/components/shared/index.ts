@@ -25,3 +25,4 @@ export {ErrorText} from './error-text'
 
 export * from './form'
 export * from '@/app/shared/components/modals'
+export * from './email-templates'
