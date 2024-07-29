@@ -9,34 +9,48 @@ const prisma = new PrismaClient({
 });
 
 
+// export async function GET(req: NextRequest) {
+//
+//     const query = req.nextUrl.searchParams.get('query') || ''
+//     console.log(`Received query: ${query}`);
+//     // ниже второй вариант который тоже не работает
+//     // const products = await prisma.$queryRaw`
+//     //     SELECT * FROM "Product"
+//     //     WHERE LOWER("name") LIKE LOWER(${`%${query}%`})
+//     //     LIMIT 5
+//     // `;
+//
+//     //баг в призме с русским регистром
+//
+//     const products = await prisma.product.findMany({
+//         where: {
+//             name: {
+//
+//                 contains: query,
+//                 mode: 'insensitive',
+//
+//             },
+//
+//
+//         },
+//         take: 5,
+//
+//
+//     })
+//     console.log(`Found products: ${JSON.stringify(products)}`);
+//     return NextResponse.json(products)
+// }
+
 export async function GET(req: NextRequest) {
+    const query = req.nextUrl.searchParams.get('query') || '';
 
-    const query = req.nextUrl.searchParams.get('query') || ''
-    console.log(`Received query: ${query}`);
-    // ниже второй вариант который тоже не работает
-    // const products = await prisma.$queryRaw`
-    //     SELECT * FROM "Product"
-    //     WHERE LOWER("name") LIKE LOWER(${`%${query}%`})
-    //     LIMIT 5
-    // `;
+    const products = await prisma.product.findMany();
 
-    //баг в призме с русским регистром
+    const filteredProducts = query
+        ?
+        products.filter(product => product.name.toLocaleLowerCase().includes(query)).slice(0, 5)
+        :
+        products.slice(0, 5);
 
-    const products = await prisma.product.findMany({
-        where: {
-            name: {
-
-                contains: query,
-                mode: 'insensitive',
-
-            },
-
-
-        },
-        take: 5,
-
-
-    })
-    console.log(`Found products: ${JSON.stringify(products)}`);
-    return NextResponse.json(products)
-}
+    return NextResponse.json(filteredProducts);
+};

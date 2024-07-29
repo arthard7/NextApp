@@ -39,7 +39,7 @@ export const Categories = ({className, items}: CategoriesProps) => {
 
 
     return (
-        <div className={cn('inline-flex gap-1 bg-gray-50 p-1 rounded-2xl', className)}>
+        <div className={cn('inline-flex  gap-1 bg-gray-50 p-1 rounded-2xl', className)}>
 
             {items?.map(({name, id}, index) => (
                 <a

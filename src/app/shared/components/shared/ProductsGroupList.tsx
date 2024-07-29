@@ -61,7 +61,6 @@ useEffect(() => {
     //
     // }, [categoryId, intersectionRef.current])
 
-    console.log(items)
 
 
     return (

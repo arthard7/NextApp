@@ -20,6 +20,7 @@ export {CheckoutSidebar} from './checkoutSidebar'
 export {RequiredSymbol} from './required-symbol'
 export {ClearButton} from './clear-button'
 export {ErrorText} from './error-text'
+export {ProfileButton} from './ProfileButton'
 
 
 

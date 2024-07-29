@@ -29,7 +29,7 @@ interface CartDrawerProps {
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({children, }: CartDrawerProps) => {
 
-const {removeCartItem, updateItemQuantity, items, totalAmount} = useCart()
+const {removeCartItem, updateItemQuantity, items, totalAmount, loading} = useCart()
 const [redirecting, setRedirecting] = React.useState(false)
 
     const onClickRemoveButton = (id: number) => {
@@ -41,7 +41,10 @@ const [redirecting, setRedirecting] = React.useState(false)
 
     const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
 
+
+
         const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1
+
 
        updateItemQuantity(id, newQuantity)
 
@@ -101,7 +104,7 @@ const [redirecting, setRedirecting] = React.useState(false)
                                             imageUrl={item.imageUrl}
                                             id={item.id}
                                             quantity={item.quantity}
-                                            disabled={item.disabled}
+                                            disabled={loading}
 
                                         />
 
