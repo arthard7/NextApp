@@ -1,12 +1,17 @@
-import {cn} from "../../../../../shared/lib/utils";
+'use client'
 import {Container} from "./Container";
 import Image from "next/image";
-import {Button} from "../ui";
-import { User} from "lucide-react";
+
 import Link from "next/link";
 import {CartButton} from "@/app/shared/components/shared/CartButton";
 import {SearchInput} from "@/app/shared/components/shared/searchInput";
-
+import React, {useEffect} from "react";
+import {useSearchParams} from "next/navigation";
+import toast from "react-hot-toast";
+import {useSession, signIn} from "next-auth/react";
+import {ProfileButton} from "@/app/shared/components/shared/ProfileButton";
+import {AuthModal} from "@/app/shared/components/modals";
+import {cn} from "../../../../../shared/lib/utils";
 
 interface HeaderProps {
     hasSearch?: boolean
@@ -16,13 +21,28 @@ interface HeaderProps {
 }
 
 
-export const Header = ({className, hasSearch = false, hasCart = true}: HeaderProps) => {
+export const Header = ({className, hasSearch = true, hasCart = true}: HeaderProps) => {
+
+const [open, setOpen] = React.useState(false)
+    const {data: session} = useSession()
+    const searchParams = useSearchParams()
+
+
+
+    useEffect(() => {
+        if (searchParams.has('paid')) {
+            setTimeout(() => {
+                toast.success('Заказ успешно оплачен')
+            }, 500)
+        }
+
+
+    }, [])
 
 
     return (
         <header className={cn(' border-b ', className)}>
             <Container className='flex items-center justify-between py-8'>
-
 
 
                 {/* левая часть */}
@@ -37,25 +57,23 @@ export const Header = ({className, hasSearch = false, hasCart = true}: HeaderPro
                 </Link>
 
 
-                  { hasSearch && <div className={'mx-10 flex-1'}>
-                    <SearchInput></SearchInput>
-                </div> }
+                {hasSearch && <div className={'mx-10 flex-1'}>
+                    <SearchInput/>
+                </div>}
 
 
                 {/* правая часть */}
                 <div className='flex items-center gap-3 '>
-                    <Button variant='outline' className='flex items-center gap-1'>
-                        <User size={16}/>
-                        Войти
-                    </Button>
+
+                    <AuthModal open={open} onClose={() => setOpen(false)}/>
+                    <ProfileButton onClickSignIn={() => setOpen(true)}/>
 
 
                     {hasCart && (
 
-                            <CartButton/>
+                        <CartButton/>
 
                     )}
-
 
 
                 </div>

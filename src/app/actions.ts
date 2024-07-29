@@ -6,7 +6,7 @@ import {prisma} from "../../prisma/prisma-client";
 import {cookies} from "next/headers";
 import {$Enums} from ".prisma/client";
 import OrderStatus = $Enums.OrderStatus;
-import {sendEmail} from "../../shared/lib";
+import {createPayment, sendEmail} from "../../shared/lib";
 import {PayOrderTemplate} from "@/app/shared/components/shared";
 
 export async function createOrder(data: CheckoutFormValues) {
@@ -81,6 +81,7 @@ export async function createOrder(data: CheckoutFormValues) {
         *
         * */
 
+
         await prisma.cart.update({
             where: {
                 id: userCart.id
@@ -97,14 +98,40 @@ export async function createOrder(data: CheckoutFormValues) {
         })
 
 
+        const paymentData = await createPayment({
+            amount: order.totalAmount,
+            description: `Next pizza / оплатите заказ # ${order.id}`,
+            orderId: order.id
+        })
+
+        if (!paymentData) {
+            throw new Error('Payment data not found')
+        }
+
+
+        await prisma.order.update({
+            where: {
+                id: order.id,
+            },
+            data: {
+
+                paymentId: paymentData.id
+
+
+            },
+        })
+
+        const paymentUrl = paymentData.confirmation.confirmation_url
+
+
         await sendEmail(data.email, `Next pizza / оплатите заказ # + ${order.id}`, PayOrderTemplate({
             orderId: order.id,
             totalAmount: order.totalAmount,
-            paymentUrl: 'https://resend.com/docs/send-with-nextjs'
+            paymentUrl
         }))
 
 
-
+        return paymentUrl
 
     } catch (e) {
 
