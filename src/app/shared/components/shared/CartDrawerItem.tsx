@@ -28,7 +28,6 @@ export const CartDrawerItem = ({
                                }: CartDrawerItemProps) => {
 
 
-    console.log(disabled + ' это дизаблед ')
 
     return (
         <div className={cn('flex bg-white p-5 gap-6', {'opacity-50 pointer-events-none': disabled}, className)}>
