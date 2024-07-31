@@ -1,14 +1,19 @@
-import NextAuth from "next-auth";
+import NextAuth, {AuthOptions} from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialProvider from "next-auth/providers/credentials";
 import {compare, hashSync} from "bcrypt";
 import {UserRole} from "@prisma/client";
 import {prisma} from "../../../../../prisma/prisma-client";
-
-
-export const authOptions = {
+import GoogleProvider from 'next-auth/providers/google'
+export const authOptions: AuthOptions = {
 
     providers: [
+
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID || '',
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || ''
+        }),
+
         GitHubProvider({
             clientId: process.env.GITHUB_ID || '',
             clientSecret: process.env.GITHUB_SECRET || '',
@@ -117,12 +122,14 @@ export const authOptions = {
                     data: {
                         email: user.email,
                         fullName: user.name || 'User #' + user.id.toString(),
-                        password: hashSync(user.id.toString(), 10),
+                        password: hashSync(user.id.toString(), 10), // TODO: переделать на нормальный генератор пароля без id
                         verified: new Date(),
                         provider: account?.provider,
                         providerId: account?.providerAccountId
                     }
                 })
+
+                return true
 
             } catch (e) {
                 console.error("Error [SIGNIN]", e)
@@ -130,7 +137,19 @@ export const authOptions = {
             }
         },
 
-        async jwt({token}) {
+        async jwt({token, user}) {
+
+            if (user) {
+                token.id = user.id;
+                token.email = user.email;
+                token.role = user.role;
+                token.fullName = user.fullName;
+            }
+
+            if(!token.email) {
+                return  token
+            }
+
             const findUser = await prisma.user.findFirst({
                 where: {
                     email: token.email
@@ -150,7 +169,9 @@ export const authOptions = {
             return token
         },
 
-        async session({session, token}) {
+     async session({session, token}) {
+
+
 
             if (session?.user) {
 

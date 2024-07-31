@@ -36,6 +36,12 @@ const [open, setOpen] = React.useState(false)
             }, 500)
         }
 
+        if (searchParams.has('verified')) {
+            setTimeout(() => {
+                toast.success('Почта успешно подтверждена!')
+            }, 500)
+        }
+
 
     }, [])
 
