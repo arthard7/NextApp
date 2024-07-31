@@ -21,8 +21,8 @@ export {RequiredSymbol} from './required-symbol'
 export {ClearButton} from './clear-button'
 export {ErrorText} from './error-text'
 export {ProfileButton} from './ProfileButton'
-
-
+export {InfoBlock} from './InfoBlock'
+export {ProfileForm} from './ProfileForm'
 
 export * from './form'
 export * from '@/app/shared/components/modals'
