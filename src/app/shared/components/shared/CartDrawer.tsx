@@ -13,12 +13,13 @@ import Link from "next/link";
 import {ArrowLeft, ArrowRight} from "lucide-react";
 
 import {CartDrawerItem} from "@/app/shared/components/shared/CartDrawerItem";
-import {getCartItemDetails} from "../../../../../shared/lib/get-cart-item-details";
 import React from "react";
 import {PizzaSize, PizzaType} from "../../../../../shared/constants/pizza";
 import {Title} from "@/app/shared/components/shared/Title";
 import {cn} from "../../../../../shared/lib/utils";
+import {getCartItemDetails} from "../../../../../shared/lib/get-cart-item-details";
 import {useCart} from "../../../../../shared/hooks";
+
 
 
 interface CartDrawerProps {

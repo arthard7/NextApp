@@ -1,10 +1,10 @@
-import {cn} from "../../../../../shared/lib/utils";
 
 
 import * as CartItem from './cart-item-details'
 import {CartItemProps} from "@/app/shared/components/shared/cart-item-details/cart-item-details.types";
 import {CountButton} from "@/app/shared/components/shared/count-button";
 import {Trash2Icon} from "lucide-react";
+import {cn} from "../../../../../shared/lib/utils";
 
 
 interface CartDrawerItemProps extends CartItemProps {
@@ -19,7 +19,6 @@ export const CartDrawerItem = ({
                                    name,
                                    price,
                                    imageUrl,
-                                   id,
                                    details,
                                    quantity,
                                    disabled,

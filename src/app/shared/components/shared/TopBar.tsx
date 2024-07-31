@@ -1,6 +1,5 @@
 
 
-import {SortPopup} from "./SortPopup";
 import {cn} from "../../../../../shared/lib/utils";
 import {Container} from "./Container";
 import {Category} from "@prisma/client";
@@ -20,7 +19,6 @@ export const TopBar = ({className, categories}: TopBarProps) => {
             <Container className={'mt-10'}>
                 <div className={'flex justify-between'}>
                     <Categories items={categories}/>
-                    <SortPopup/>
                 </div>
 
             </Container>
