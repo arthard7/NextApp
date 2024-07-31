@@ -1,6 +1,6 @@
 'use client'
 import React, {useEffect} from "react";
-import {FormProvider, SubmitHandler, useForm,} from "react-hook-form"
+import {FormProvider, useForm,} from "react-hook-form"
 import {Container, Title} from "@/app/shared/components/shared";
 import {useCart} from "../../../../shared/hooks";
 import {CheckoutSidebar} from "@/app/shared/components/shared/checkoutSidebar";
@@ -10,7 +10,6 @@ import {
     checkoutFormSchema,
     CheckoutFormValues
 } from "@/app/shared/components/shared/checkout/schema/checkoutFormSchema";
-import {cn} from "../../../../shared/lib/utils";
 import {createOrder} from "@/app/actions";
 import toast from "react-hot-toast";
 import {useSession} from "next-auth/react";

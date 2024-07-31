@@ -28,6 +28,7 @@ export const Stories = ({className}: StoriesProps) => {
 
         const fetchStories = async () => {
             const data = await Api.stories.getAll()
+            console.log(data)
             setStories(data)
         }
 
@@ -47,7 +48,7 @@ export const Stories = ({className}: StoriesProps) => {
 
     }
 
-    const handleBackgroundClick = (e) => {
+    const handleBackgroundClick = (e: any) => {
         if (e.target.className.includes('modal-background')) {
             setOpen(false);
         }

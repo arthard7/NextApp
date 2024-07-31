@@ -1,5 +1,5 @@
+'use client'
 import {ErrorText, WhiteBlock} from "@/app/shared/components/shared";
-import {Input, Textarea} from "@/app/shared/components/ui";
 import React from "react";
 import {FormTextarea} from "@/app/shared/components/shared/form/form-textarea";
 import {AddressInput} from "@/app/shared/components/shared/AddressInput";

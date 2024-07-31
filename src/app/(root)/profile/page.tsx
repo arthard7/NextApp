@@ -15,6 +15,7 @@ export default async function ProfilePage() {
 
     const user = await prisma.user.findFirst({
         where: {
+            //@ts-ignore
             id: Number(session?.id)
         }
     })

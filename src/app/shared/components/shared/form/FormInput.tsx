@@ -1,3 +1,4 @@
+'use client'
 import {ClearButton, ErrorText, RequiredSymbol} from "@/app/shared/components/shared";
 import {Input} from "@/app/shared/components/ui";
 import {useFormContext} from "react-hook-form";
