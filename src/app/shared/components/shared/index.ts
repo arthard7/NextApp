@@ -23,6 +23,9 @@ export {ErrorText} from './error-text'
 export {ProfileButton} from './ProfileButton'
 export {InfoBlock} from './InfoBlock'
 export {ProfileForm} from './ProfileForm'
+export {Stories} from './Stories'
+
+
 
 export * from './form'
 export * from '@/app/shared/components/modals'

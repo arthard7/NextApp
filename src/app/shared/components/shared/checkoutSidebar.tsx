@@ -16,7 +16,7 @@ interface checkoutSidebarProps {
 }
 
 
-export const CheckoutSidebar = ({className, totalAmount, submitting,loading}: checkoutSidebarProps) => {
+export const CheckoutSidebar = ({className, totalAmount,loading}: checkoutSidebarProps) => {
 
 
     const taxPrice = Math.floor((totalAmount * TAX) / 100)

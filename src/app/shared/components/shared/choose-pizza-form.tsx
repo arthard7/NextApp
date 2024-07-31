@@ -4,12 +4,12 @@ import {PizzaImage} from "./PizzaImage";
 import {Title} from "./index";
 import {Button} from "../ui";
 import {GroupVariants} from "./groupVariants";
-import {mapPizzaType, PizzaSize, pizzaSizes, PizzaType, pizzaTypes} from "../../../../../shared/constants/pizza";
+import {mapPizzaType, PizzaSize, PizzaType, pizzaTypes} from "../../../../../shared/constants/pizza";
 import {useEffect, useState} from "react";
 import {Ingredient, ProductItem} from "@prisma/client";
 import {IngredientItem} from "@/app/shared/components/shared/IngredientItem";
 import {useSet} from "react-use";
-import {calcTotalPizzaPrice} from "../../../../../shared/lib/calc-total-pizza-price";
+import {calcTotalPizzaPrice} from "../../../../../shared/lib";
 import {getAvailablePizzaSizes} from "../../../../../shared/hooks";
 
 

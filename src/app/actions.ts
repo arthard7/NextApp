@@ -156,12 +156,14 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
 
         const findUser = await prisma.user.findFirst({
             where: {
+                //@ts-ignore
                 id: Number(currentUser.id),
             },
         });
 
         await prisma.user.update({
             where: {
+                //@ts-ignore
                 id: Number(currentUser.id),
             },
             data: {

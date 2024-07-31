@@ -24,8 +24,9 @@ export const Filters = ({className}: FiltersProps) => {
 
     const updatePrices = (prices: number[]) => {
 
+
         filters.setPrices('priceFrom', prices[0]),
-            filters.setPrices('priceTo', prices[1])
+        filters.setPrices('priceTo', prices[1])
 
     }
 
@@ -83,6 +84,7 @@ export const Filters = ({className}: FiltersProps) => {
 
 
                 <RangeSlider
+
                     min={0}
                     max={1000}
                     step={10}

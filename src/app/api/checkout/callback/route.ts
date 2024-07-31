@@ -3,7 +3,6 @@ import {PaymentCallbackData} from "../../../../../@types/yookassa";
 import {prisma} from "../../../../../prisma/prisma-client";
 import {$Enums} from ".prisma/client";
 import OrderStatus = $Enums.OrderStatus;
-import {CartItem} from "@prisma/client";
 import {CartItemDTO} from "../../../../../shared/dto/cart.dto";
 import {sendEmail} from "../../../../../shared/lib";
 import {OrderSuccess} from "@/app/shared/components/shared/email-templates/order-success";
