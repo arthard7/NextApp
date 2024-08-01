@@ -1,3 +1,5 @@
+'use client'
+
 import {WhiteBlock} from "@/app/shared/components/shared/white-block";
 import {CheckoutItemDetails} from "@/app/shared/components/shared/checkoutItemDetails";
 import {ArrowRight, Box, Percent, Truck} from "lucide-react";
