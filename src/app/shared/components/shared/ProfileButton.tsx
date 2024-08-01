@@ -1,3 +1,4 @@
+'use client'
 import {Button} from "@/app/shared/components/ui";
 import {signIn, useSession} from "next-auth/react";
 import {CircleUser, User} from "lucide-react";

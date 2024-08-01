@@ -1,3 +1,4 @@
+'use client'
 import {cn} from "../../../../../shared/lib/utils";
 import {Title} from "./index";
 import {Button} from "../ui";

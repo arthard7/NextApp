@@ -1,3 +1,4 @@
+'use client'
 import {FormProvider, useForm} from "react-hook-form";
 import {loginSchema, TFormLoginValues} from './schemas'
 import {zodResolver} from "@hookform/resolvers/zod";
