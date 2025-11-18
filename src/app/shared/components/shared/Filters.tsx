@@ -21,7 +21,7 @@ export const Filters = ({className}: FiltersProps) => {
 
     useQueryFilters(filters)
 
-
+console.log('some changes')
     const updatePrices = (prices: number[]) => {
 
 
