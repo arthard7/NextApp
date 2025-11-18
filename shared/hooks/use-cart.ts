@@ -13,6 +13,8 @@ type ReturnProps = {
     addCartItem: (values: CreateCartItemValues) => void;
 };
 
+console.log('a1')
+
 export const useCart = (): ReturnProps => {
 
     const cartState = useCartStore((state) => state);
