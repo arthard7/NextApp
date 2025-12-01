@@ -4,7 +4,7 @@ import {useSet} from "react-use";
 import {useMemo, useState} from "react";
 import {useIngredients} from "./use-ingredients";
 
-
+console.log('change 2')
 enum SEARCH_PARAMS {
     PRICE_FROM = 'priceFrom',
     PRICE_TO = 'priceTo',
