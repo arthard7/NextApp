@@ -3,7 +3,7 @@ import React from 'react';
 import { CartStateItem } from '../lib/get-cart-details';
 import {CartState, useCartStore} from "../store/cart";
 import {CreateCartItemValues} from "../services/dto/cart.dto";
-
+console.log('chane 3')
 type ReturnProps = {
     totalAmount: number;
     items: CartStateItem[];
