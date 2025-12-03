@@ -16,6 +16,7 @@ type ReturnProps = {
 console.log('a1')
 console.log('commit 1')
 console.log('commit 2')
+console.log('commit 3')
 
 export const useCart = (): ReturnProps => {
 
