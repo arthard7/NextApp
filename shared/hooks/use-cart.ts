@@ -12,11 +12,7 @@ type ReturnProps = {
     removeCartItem: (id: number) => void;
     addCartItem: (values: CreateCartItemValues) => void;
 };
-
-console.log('a1')
-console.log('commit 1')
-console.log('commit 2')
-console.log('commit 3')
+console.log('com')
 
 export const useCart = (): ReturnProps => {
 
